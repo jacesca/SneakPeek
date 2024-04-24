@@ -1,0 +1,22 @@
+from scipy.stats import pearsonr
+import matplotlib.pyplot as plt 
+
+def corrfunc(x, y, **kws):
+    (r, p) = pearsonr(x, y)
+    ax = plt.gca()
+    ax.annotate("p = {}".format(p), fontsize=6,
+                xy=(.1, .9), xycoords=ax.transAxes)
+
+import seaborn as sns; sns.set(style='white')
+import pandas as pd
+
+data = {'prop_tenure': [0.0, 0.0, 0.06, 0.38, 0.61, 0.01, 0.10, 0.04, 0.22], 
+        'prop_12m':    [0.0, 0.0, 0.06, 0.38, 0.61, 0.01, 0.10, 0.04, 0.22], 
+        'prop_6m':     [0.0, 0.0, 0.10, 0.25, 0.66, 0.02, 0.12, 0.04, 0.22]}
+
+df = pd.DataFrame(data)
+
+graph = sns.pairplot(data=df, diag_kind="kde")
+graph.map(corrfunc)
+#graph.map_lower(corrfunc)
+plt.show()

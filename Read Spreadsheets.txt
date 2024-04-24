@@ -1,0 +1,33 @@
+# Reading the file
+if file_type == self.EXCEL_FILE:
+	url = f"https://docs.google.com/spreadsheets/export?id={id}&exportFormat=xlsx"
+	with requests.Session() as s:
+		res = s.get(url, headers={"Authorization": "Bearer " + self.gauth.attr['credentials'].access_token})
+	df = pd.read_excel(BytesIO(res.content))
+
+elif file_type == self.CSV_FILE:
+	params = {'q': f"title='{name}'"}
+	gdrive_csv_file = self.drive.ListFile(params).GetList()[0]
+	input_csv = StringIO(gdrive_csv_file.GetContentString())    
+	df = pd.read_csv(input_csv)
+	
+else:
+	client = gspread.authorize(self.credentials)
+	spreadsheet = client.open(name)
+	df = pd.DataFrame(spreadsheet.get_worksheet(0).get_all_records())
+	client.session.close()
+
+
+
+# To read excel stored in google drive
+# url = f"https://docs.google.com/spreadsheets/export?id={file_id}&exportFormat=xlsx"
+            # with requests.Session() as s:
+            #     res = s.get(url, headers={"Authorization": "Bearer " + self.gauth.attr['credentials'].access_token})
+            # df = pd.read_excel(BytesIO(res.content), dtype=object, parse_dates=False)
+
+
+# To read excel stored in google drive but as csv
+url = f"https://docs.google.com/spreadsheets/export?id={file_id}&exportFormat=csv"
+            with requests.Session() as s:
+                res = s.get(url, headers={"Authorization": "Bearer " + self.gauth.attr['credentials'].access_token})
+            df = pd.read_csv(BytesIO(res.content))
