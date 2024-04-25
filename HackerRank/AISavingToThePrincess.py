@@ -43,6 +43,7 @@ Scoring
   the princess)/10, where N is the size of the grid (3x3 in the sample
   testcase).
 https://www.hackerrank.com/challenges/saveprincess/submissions/game/380249419
+https://www.hackerrank.com/challenges/saveprincess/submissions/game/380251892
 """
 # import numpy as np
 
