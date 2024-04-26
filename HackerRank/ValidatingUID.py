@@ -26,6 +26,8 @@ Sample Input
 Sample Output
     Invalid
     Valid
+
+https://www.hackerrank.com/challenges/validating-uid/submissions/code/380410003
 """
 import re
 # import os
